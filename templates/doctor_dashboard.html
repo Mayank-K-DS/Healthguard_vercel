@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <style>
+        /* Global Styling */
+        * {
+           box-sizing: border-box;
+           margin: 0;
+           padding: 0;
+           font-family: 'Poppins', sans-serif;
+       }
+
+       body {
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           height: 100vh;
+           background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+           color: #fff;
+       }
+
+       .container {
+           background: rgba(255, 255, 255, 0.2);
+           border-radius: 15px;
+           padding: 40px;
+           max-width: 400px;
+           width: 100%;
+           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+           text-align: center;
+           backdrop-filter: blur(10px);
+           border: 1px solid rgba(255, 255, 255, 0.2);
+           opacity: 0;
+           transform: scale(0.8);
+           animation: fadeInUp 1.5s ease forwards;
+       }
+
+       @keyframes fadeInUp {
+           0% {
+               opacity: 0;
+               transform: scale(0.8);
+           }
+
+           100% {
+               opacity: 1;
+               transform: scale(1);
+           }
+       }
+
+       h1 {
+           font-size: 2.5rem;
+           margin-bottom: 20px;
+           color: #fff;
+           font-weight: 600;
+           animation: slideInLeft 1.2s ease;
+       }
+
+       @keyframes slideInLeft {
+           0% {
+               transform: translateX(-50px);
+               opacity: 0;
+           }
+
+           100% {
+               transform: translateX(0);
+               opacity: 1;
+           }
+       }
+
+       p {
+           font-size: 1.1rem;
+           margin-bottom: 10px;
+           color: #f9f9f9;
+           animation: slideInRight 1.4s ease;
+       }
+
+       @keyframes slideInRight {
+           0% {
+               transform: translateX(50px);
+               opacity: 0;
+           }
+
+           100% {
+               transform: translateX(0);
+               opacity: 1;
+           }
+       }
+
+       strong {
+           font-size: 1.2rem;
+           color: #fdfdfd;
+       }
+
+       input[type="text"],
+       input[type="password"],
+       input[type="number"],
+       select {
+           width: 100%;
+           padding: 15px;
+           border: none;
+           border-radius: 10px;
+           font-size: 1rem;
+           margin-bottom: 20px;
+           outline: none;
+           background: rgba(255, 255, 255, 0.8);
+           color: #333;
+           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+           transition: box-shadow 0.4s ease;
+       }
+
+       input[type="text"]:focus,
+       input[type="password"]:focus,
+       input[type="number"]:focus {
+           border: 2px solid #fff;
+           box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+       }
+
+       button {
+           background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+           color: white;
+           padding: 15px;
+           border: none;
+           border-radius: 10px;
+           width: 100%;
+           font-size: 1.1rem;
+           font-weight: bold;
+           cursor: pointer;
+           box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+           transition: all 0.3s ease;
+       }
+
+       button:hover {
+           background: linear-gradient(135deg, #fff700 0%, #ffde00 100%);
+           box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+           transform: translateY(-3px);
+       }
+       
+       /* Responsive Design */
+       @media (max-width: 600px) {
+           .container {
+               padding: 20px;
+           }
+
+           h1 {
+               font-size: 2rem;
+           }
+
+           button {
+               font-size: 1rem;
+           }
+       }
+    </style>
+    <script>
+        // Set the max attribute to today's date for the date input
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+            dateInput.max = today; // Set the max attribute to today's date
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Doctor Dashboard</h1>
+        <form action="/doctor_dashboard" method="POST">
+            <input type="text" id="patient_id" name="patient_id" placeholder="Patient ID" required>
+            <input type="text" id="symptom" name="symptom" placeholder="Symptom" required>
+            <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" required>
+            <input type="date" id="date" name="date" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

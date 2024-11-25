@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+            padding: 40px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .appointments-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .appointment-item {
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .appointment-item:last-child {
+            border-bottom: none;
+        }
+
+        .appointment-item strong {
+            display: inline-block;
+            width: 150px;
+            color: #0072ff;
+        }
+
+        .back-button {
+            display: block;
+            background: linear-gradient(135deg, #28a745 0%, #8fd19e 100%);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 30px auto 0;
+            width: 220px;
+            text-decoration: none;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #28a745 0%, #6edc84 100%);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .appointment-item strong {
+                width: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .appointment-item strong {
+                width: 100px;
+            }
+        }
+        .mark-done-button {
+            background: linear-gradient(135deg, #ff4b5c 0%, #ff6b6b 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .mark-done-button:hover {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff4b5c 100%);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <h1>Appointments for Patient ID: {{ patient_id }}</h1>
+
+    <div class="appointments-container">
+        {% if appointments %}
+            {% for appointment in appointments %}
+            <div class="appointment-item">
+                <p><strong>Temperature:</strong> {{ appointment.temperature }}</p>
+                <p><strong>Symptoms:</strong> {{ appointment.symptoms }}</p>
+                <p><strong>Prognosis:</strong> {{ appointment.prognosis }}</p>
+                <p><strong>Appointment Date:</strong> {{ appointment.appointment_date }}</p>
+                <p><strong>Appointment Time:</strong> {{ appointment.appointment_time }}</p>
+            
+                <form action="{{ url_for('delete_appointment', patient_id=patient_id, appointment_date=appointment.appointment_date, appointment_time=appointment.appointment_time) }}" method="post" style="display: inline;">
+                    <button type="submit" class="mark-done-button">Delete this appointment</button>
+                </form>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No appointments found for this patient ID.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

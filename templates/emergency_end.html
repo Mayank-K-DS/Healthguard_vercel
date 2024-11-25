@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Status</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery for easy AJAX handling -->
+    <style>
+        /* Global Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeInUp 1.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 600;
+            animation: slideInLeft 1.2s ease;
+        }
+
+        @keyframes slideInLeft {
+            0% {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #f9f9f9;
+            animation: slideInRight 1.4s ease;
+            line-height: 1.5em;
+        }
+
+        @keyframes slideInRight {
+            0% {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .emergency-active {
+            color: red;
+            font-weight: bold;
+            font-size: 1.2rem;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        strong {
+            font-size: 1.2rem;
+            color: #fdfdfd;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.4s ease;
+        }
+
+        input[type="text"]:focus {
+            border: 2px solid #fff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #fff700 0%, #ffde00 100%);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .emergency-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: red;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .emergency-button:hover {
+            background-color: darkred;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            button {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Emergency Status</h1>
+        <p id="emergency-status">
+            {% if emergency_active %}
+                <span class="emergency-active">Emergency detected at booth number 00001</span>
+            {% else %}
+                No current emergency call
+            {% endif %}
+        </p>
+        
+        <button id="reset-emergency-btn">Reset Emergency</button>
+    </div>
+
+    <script>
+        // Handle the reset emergency button click
+        $('#reset-emergency-btn').click(function() {
+            $.ajax({
+                url: "{{ url_for('reset_emergency') }}",
+                type: "GET",  // Change to GET
+                success: function(response) {
+                    // Update the status text dynamically without reloading the page
+                    $('#emergency-status').text(response.message);
+                },
+                error: function() {
+                    alert("Error resetting the emergency status. Please try again.");
+                }
+            });
+        });
+        // Reload the page every 4000 milliseconds (4 seconds)
+        setInterval(function() {
+            window.location.href = window.location.href;
+        }, 4000);
+    </script>  
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Control Healthguard</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        h1 { color: #333; }
+        button { font-size: 18px; padding: 10px 20px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Turn Healthguard On/Off</h1>
+    <form method="POST" action="/control_light">
+        <button type="submit" name="action" value="on">Turn On</button>
+        <button type="submit" name="action" value="off">Turn Off</button>
+    </form>
+</body>
+</html>

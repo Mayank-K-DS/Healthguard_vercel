@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Appointments</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+            padding: 40px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Removes unnecessary lines */
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            font-size: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Light border to maintain smoothness */
+        }
+
+        th {
+            background-color: #0072ff;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: #555;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f9ff;
+            transform: scale(1.01);
+            transition: all 0.2s ease-in-out;
+        }
+
+        button {
+            background: linear-gradient(135deg, #28a745 0%, #8fd19e 100%);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #28a745 0%, #6edc84 100%);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+            transform: translateY(-3px);
+        }
+
+        /* For action button cells */
+        td form {
+            display: inline-block;
+        }
+
+        .dashboard-btn {
+            background: linear-gradient(135deg, #ff0072 0%, #ff5858 100%);
+            padding: 12px 20px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            width: 220px;
+            margin: 30px auto;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-btn:hover {
+            background: linear-gradient(135deg, #ff0072 0%, #ffde00 100%);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            th, td {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            button {
+                font-size: 0.8rem;
+                padding: 8px 12px;
+            }
+
+            .dashboard-btn {
+                width: 180px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            table {
+                font-size: 0.8rem;
+            }
+
+            button {
+                font-size: 0.75rem;
+                padding: 8px 10px;
+            }
+
+            .dashboard-btn {
+                width: 160px;
+                padding: 8px 14px;
+            }
+        }
+
+        /* Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 10px; /* Width of the scrollbar */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.3); /* Track color */
+            border-radius: 10px; /* Rounded corners for the track */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.6); /* Color of the scrollbar handle */
+            border-radius: 10px; /* Rounded corners for the scrollbar handle */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.8); /* Change color on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Doctor Appointments</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Patient ID</th>
+                <th>Name</th>
+                <th>Temperature</th>
+                <th>Symptoms</th>
+                <th>Prognosis</th>
+                <th>Appointment Date</th>
+                <th>Appointment Time</th>
+                <th>action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.patientID }}</td>
+                <td>{{ appointment.name }}</td>
+                <td>{{ appointment.temperature }}</td>
+                <td>{{ appointment.symptoms }}</td>
+                <td>{{ appointment.prognosis }}</td>
+                <td>{{ appointment.appointment_date }}</td>
+                <td>{{ appointment.appointment_time }}</td>
+                <td>
+                    <form action="{{ url_for('mark_as_done', appointment_index=loop.index0) }}" method="POST">
+                        <button type="submit">Mark as Done</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('doctor_dashboard') }}" class="dashboard-btn">Go to Dashboard</a>
+</body>
+</html>

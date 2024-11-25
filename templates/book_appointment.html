@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            overflow: auto;
+            scroll-behavior: smooth; /* Enables smooth scrolling */
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #f0f0f0;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: block;
+            color: #f9f9f9;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        }
+        input[type="date"], input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.4s ease;
+        }
+        input[type="date"]:focus, input[type="text"]:focus {
+            border: 2px solid #fff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        input[type="submit"] {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background: linear-gradient(135deg, #fff700 0%, #ffde00 100%);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+        img {
+            width: 300px;
+            height: auto;
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #ff0080 0%, #ff6666 100%);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+        .contact {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fdfdfd;
+            margin-bottom: 10px;
+        }
+        /* Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 10px; /* Width of the scrollbar */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2); /* Track color */
+            border-radius: 10px; /* Rounded corners for the track */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.6); /* Color of the scrollbar handle */
+            border-radius: 10px; /* Rounded corners for the scrollbar handle */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.8); /* Change color on hover */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            button, input[type="submit"] {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <script>
+        // Set the min attribute to today's date
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.getElementById('appointment_date');
+            const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+            dateInput.min = today;
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Book an Appointment Now</h1>
+        <p>Schedule your appointment with the doctor now.</p>
+
+        <!-- Form for booking appointment -->
+        <form method="POST" action="{{ url_for('save_appointment') }}">
+            <label for="appointment_date">
+                <i class="fas fa-calendar-alt"></i> Select Appointment Date:
+            </label>
+            <input type="date" id="appointment_date" name="appointment_date" required min="{{ current_date }}">
+            
+            <label for="appointment_time">
+                <i class="fas fa-clock"></i> Select Appointment Time:
+            </label>
+            <input type="time" id="appointment_time" name="appointment_time" required>
+            <input type="submit" value="Book Appointment">
+        </form>
+
+        <p class="contact"><i class="fas fa-phone-alt"></i> Contact the doctor for immediate assistance</p>
+        <img src="{{ image_path }}" alt="Doctor Appointment">
+
+        <button onclick="window.location.href='/'"><i class="fas fa-home"></i> Back to Home</button>
+    </div>
+</body>
+</html>
