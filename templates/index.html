@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard</title>
+    <style>
+        /* Global Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* opacity: 0; */ /* Remove this */
+            /* transform: scale(0.8); */ /* Remove this */
+            animation: fadeInUp 1.5s ease forwards;
+        }
+        
+
+        /* Accessibility-friendly focus styles */
+        .container:focus-within,
+        .emergency-button:focus,
+        button:focus,
+        input:focus {
+            outline: 3px solid yellow;
+        }
+
+        /* Emergency Button Styling */
+        .emergency-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: red;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .emergency-button:hover,
+        .emergency-button:focus {
+            background-color: darkred;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        p, label {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #f9f9f9;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.4s ease;
+        }
+
+        input[type="text"]:focus {
+            border: 2px solid #fff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        button:hover,
+        button:focus {
+            background: linear-gradient(135deg, #fff700 0%, #ffde00 100%);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            button {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('confirm_emergency_help') }}" class="emergency-button" aria-label="Emergency help button">Get Emergency Help</a>
+
+    <main class="container" role="main" tabindex="0">
+        <h1>HealthGuard</h1>
+        <p>Patient ID: <strong>{{ patientID }}</strong></p>
+        <p>Name: <strong>{{ name }}</strong></p>
+        <p>Age: <strong>{{ age }}</strong></p>
+        <p>Gender: <strong>{{ gender }}</strong></p>
+        <p>Body Temperature: <strong>{{ temperature }} °F</strong></p>
+
+        <label for="symptoms" class="symptoms-heading">Type your symptoms here:</label>
+        <form action="/predict" method="POST">
+            <input type="text" id="symptoms" name="symptoms" placeholder="e.g., fever, cough, headache" required aria-required="true" aria-label="Enter symptoms">
+            <button type="submit">Get Prognosis</button>
+        </form>
+
+        <button onclick="window.location.href='/change_patient_info'" aria-label="Update patient information" style="margin-top: 5px;">Update Patient Information</button>
+        <button onclick="window.location.href='{{ url_for('view_patient_dashboard', patient_id=patientID) }}'" aria-label="View previous medical history" style="margin-top: 5px;">View Previous Medical History</button>
+    </main>
+</body>
+</html>
