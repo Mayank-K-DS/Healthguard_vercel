@@ -1,0 +1,13 @@
+patientID,name,temperature,symptoms,prognosis,appointment_date,appointment_time
+00000000,,N/A,cough,Bronchial Asthma,2024-11-06,17:57
+433BD250,,100.84,"throat_irritation,runny_nose,headache,high_fever,chills,fatigue",Typhoid,2024-11-10,23:58
+433BD250,,100.84,"throat_irritation,runny_nose,headache,high_fever,chills,fatigue",Typhoid,2024-11-10,01:00
+433BD250,,99.00,"throat_irritation,runny_nose,headache,high_fever,chills,fatigue",Typhoid,2024-11-09,13:50
+138F9AC9,,97.81,"throat_irritation,runny_nose,headache,high_fever,chills,fatigue",Typhoid,2024-11-15,12:53
+138F9AC9,,97.81,"throat_irritation,runny_nose,headache,high_fever,chills,fatigue",Typhoid,2024-11-10,13:54
+B8A1C533,,97.38,"throat_irritation,runny_nose,headache,high_fever,chills,fatigue",Typhoid,2024-11-09,15:04
+B8A1C533,,97.38,"throat_irritation,runny_nose,headache,high_fever,chills,fatigue",Typhoid,2024-11-09,16:22
+B8A1C533,,97.38,"constipation,diarrhoea",Gastroenteritis,2024-11-28,14:43
+B8A1C533,,97.38,"throat_irritation,runny_nose,headache,high_fever,chills,fatigue",Typhoid,2024-11-10,18:59
+433BD250,,amaninder,91.23,"throat_irritation,runny_nose,headache,high_fever,chills,fatigue",Common Cold,2024-11-16
+2A684417,,100.48,"cough,cold,fever,backache",Bronchial Asthma,2024-11-28,19:25
